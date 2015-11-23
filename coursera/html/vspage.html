@@ -107,7 +107,7 @@
                 text: "Marker " + counter
             }]);
             markers.push({time: currenttime, text: "Marker " + counter});
-            var item = $("<li data-index='"+counter+"'><a href='#'>"+markers[counter].text+"</a></li> <input type="text">");
+            var item = $("<li data-index='"+counter+"'><a href='#'>"+markers[counter].text+"</a></li> <input type='text'>");
             $("#marker-list").append(item);
             counter = counter + 1;
        });
