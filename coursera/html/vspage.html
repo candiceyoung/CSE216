@@ -2,13 +2,13 @@
 <html>
     <head>
         <title>Project 216</title>
-        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="../static/css/homepage.css">
 
         <link href="http://vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
-        <link href="videojs/videojs.markers.css" rel="stylesheet">
+        <link href="../static/css/videojs.markers.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script src="http://vjs.zencdn.net/4.2/video.js"></script>
-        <script src='videojs/videojs.markers.js'></script>
+        <script src='../static/js/videojs.markers.js'></script>
 
     </head>
     <body>
@@ -30,12 +30,13 @@
                     </video>
                 </div>
                 <div class="discription">
-                    <p>slides</p>
+                    <p>markers</p>
 
                     <ul id='marker-list'>
                     </ul>
 
                 </div>
+                <button type="button" id="mark-button" background-color = yellow>Mark</button>
             </div>
         </div>
         <footer>
@@ -49,28 +50,31 @@
    // initialize video.js
    var player = videojs('test_video');
 
+   var markers = [];
+    /*
    var markers = [
          {
             time: 9.5,
-            text: "Chapter 1"
+            text: "Marker 1"
          },
          {
             time: 16,
-            text: "Chapter 2"
+            text: "Marker 2"
          },
          {
             time: 23.6,
-            text: "Chapter 3"
+            text: "Marker 3"
          },
          {
             time: 28,
-            text: "Chapter 4"
+            text: "Marker 4"
          },
          {
             time: 36,
-            text: "Chapter 5"
+            text: "Marker 5"
          }
       ];
+      */
 
    //load the marker plugin
    player.markers({
@@ -95,18 +99,25 @@
    
    $(document).ready(function(){
       // insert marker list
-      for(var i =0; i < markers.length; i++){
-         var item = $("<li data-index='"+i+"'><a href='#'>"+markers[i].text+"</a></li>");
-         $("#marker-list").append(item);
-      }
-      
+       var counter = 0;
+       $("#mark-button").click(function() {
+            var currenttime = player.currentTime();
+            player.markers.add([{
+                time: currenttime,
+                text: "Marker " + counter
+            }]);
+            markers.push({time: currenttime, text: "Marker " + counter});
+            var item = $("<li data-index='"+counter+"'><a href='#'>"+markers[counter].text+"</a></li> <input type="text">");
+            $("#marker-list").append(item);
+            counter = counter + 1;
+       });
+
       // set up click event
-      $("#marker-list li").click(function(){
+      $(document).on("click", "#marker-list li", function() {
          var index = $(this).data("index");
-      
+
          player.currentTime(markers[index].time);
       });
-      
    });
 
 </script>

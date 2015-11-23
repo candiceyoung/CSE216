@@ -12,5 +12,5 @@ from django.views.generic import TemplateView
 from django.template import TemplateDoesNotExist
 
 def homepage(request):
-    return render_to_response('homepage.html')
+    return render_to_response('vspage.html')
     # return HttpResponse("<p>Hello world</p>")
