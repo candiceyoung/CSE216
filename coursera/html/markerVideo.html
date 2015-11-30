@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project 216</title>
+        <link type="text/css" rel="stylesheet" href="../static/css/homepage.css">
+
+        <link href="http://vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
+        <link href="../static/css/videojs.markers.css" rel="stylesheet">
+        <script src="../static/js/jquery-2.0.3.min.js"></script>
+        <script src="../static/js/video.js"></script>
+        <script src='../static/js/videojs.markers.js'></script>
+
+        <link href="../static/css/bootstrap.css" rel="stylesheet">
+
+
+
+    </head>
+    <body>
+
+        <header>
+            <div class="header-inner">
+                <div id="page-title">CSE216 Project</div>
+            </div>
+        </header>
+
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span12">
+              <div class="page-header">
+                <h1>
+                  &nbsp The Age of the Americans<small></small>
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div class="row-fluid">
+            <div class="col-md-7">
+
+              <video id="test_video" controls preload="none" class="video-js vjs-default-skin" width="800" height="450">
+                <source src="../static/lecture.mp4" type="video/mp4">    
+              </video>
+              
+            </div>
+              <div class="col-md-5">
+                <p>
+                <button type="button" id="mark-button" class="btn btn-primary">Mark</button>
+                  &nbsp &nbsp
+                <button type="button" id="play-button" class="btn btn-success">Play</button>
+                <button type="button" id="pause-button" class="btn btn-danger">Pause</button>
+              </p>
+                <p></p>
+                <table style="width:100%" id='marker-list' class="table table-hover">
+                  
+                </table>
+              </div>
+            </div>
+        </div>
+
+      
+    </body>
+
+<script>
+   // initialize video.js
+   var player = videojs('test_video');
+
+   // var markers = [];
+   var markers = [
+         {
+            time: 2.39,
+            text: "America became more and more important since 1940s"
+         },
+         {
+            time: 4.24,
+            text: "Dimensions of America as a world power"
+         },
+         {
+            time: 4.58,
+            text: "National security changes"
+         },
+         {
+            time: 8.35,
+            text: "Economical changes"
+         },
+         {
+            time: 9.57,
+            text: "Domestic transformation of the US"
+         }
+      ];
+
+   //load the marker plugin
+   player.markers({
+      markerTip:{
+         display: true,
+         text: function(marker){
+            return marker.text;
+         }
+      },
+      breakOverlay:{
+         display: true,
+         displayTime: 3,
+         text: function(marker) {
+            return "This is an break overlay: " + marker.text;
+         }
+      },
+      onMarkerReached: function(marker) {
+        console.log(marker); 
+      },
+      markers: markers
+   });
+   
+   $(document).ready(function(){
+      // insert marker list
+      for (i = 0; i < markers.length; ++i) {
+          console.log(markers[i]);
+          player.markers.add([markers[i]]);
+          console.log(markers[i].time);
+          var item = $("<tr><td class='col-md-2' data-index='" + i + "'><a href='#'>"+markers[i].text+"</a></td> <td><textarea class='form-control' rows='1' ></textarea></td></tr>");
+          $("#marker-list").append(item);
+      }
+
+      // set up click event
+      $(document).on("click", "#marker-list td", function() {
+         var index = $(this).data("index");
+
+         player.currentTime(markers[index].time);
+      });
+
+      $(document).on("click", "#play-button", function() {
+        if(player.paused())
+          player.play();
+      });
+
+      $(document).on("click", "#pause-button", function() {
+        if(!player.paused())
+          player.pause();
+      });
+   });
+
+</script>
+
+
+</html>
