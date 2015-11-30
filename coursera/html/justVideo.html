@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project 216</title>
+        <link type="text/css" rel="stylesheet" href="../static/css/homepage.css">
+
+        <link href="http://vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
+        <link href="../static/css/videojs.markers.css" rel="stylesheet">
+        <script src="../static/js/jquery-2.0.3.min.js"></script>
+        <script src="../static/js/video.js"></script>
+        <script src='../static/js/videojs.markers.js'></script>
+
+        <link href="../static/css/bootstrap.css" rel="stylesheet">
+
+
+
+    </head>
+    <body>
+
+        <header>
+            <div class="header-inner">
+                <div id="page-title">CSE216 Project</div>
+            </div>
+        </header>
+
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span12">
+              <div class="page-header">
+                <h1 style="text-align: center">
+                  The Age of the Americans<small></small>
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div>
+
+              <video id="test_video" controls preload="none" class="video-js vjs-default-skin centre" width="800" height="450">
+                <source src="../static/lecture.mp4" type="video/mp4">    
+              </video>
+              
+
+            </div>
+        </div>
+
+
+        <!--
+        <div class="course-header">
+            <p>The Age of the Americans</p>
+        </div>
+        
+        
+
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="outline">
+                  
+                    <p>Video</p>
+                    <video id="test_video" controls preload="none" class="video-js vjs-default-skin" width="720" height="405">
+                        <source src="https://d3c33hcgiwev3.cloudfront.net/MWII_12-01.1eec7f808f5311e38d9781dc7603555a/full/360p/index.mp4?Expires=1448582400&Signature=Q-KUYtaAJgwd1grSfLFY~A-3DlDAGcympybvmh9zuZXtdZ3Gig8JqJ4Um4kj~XpH6dwZ3d99DymQ21CNVAkDDhwMpQFMZNAFm1n~mjX25LnKnHUV9OyUhAPTjp5ItbeE2yTg0N7RV31QvDfxdJCyJ5RX6DyaNKJkVaEJLs9vx9I_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A" type="video/mp4">
+                        
+                    </video>
+
+                </div>
+                <div class="discription">
+                    <p>markers</p>
+
+                    <ul id='marker-list'>
+                    </ul>
+
+                </div>
+                
+            </div>
+        </div>
+        
+        <footer>
+            <div class="page-footer">
+                <p>Copyright</p>
+            </div>
+        </footer>
+        -->
+
+      
+    </body>
+
+<script>
+   // initialize video.js
+   var player = videojs('test_video');
+
+   var markers = [];
+    /*
+   var markers = [
+         {
+            time: 9.5,
+            text: "Marker 1"
+         },
+         {
+            time: 16,
+            text: "Marker 2"
+         },
+         {
+            time: 23.6,
+            text: "Marker 3"
+         },
+         {
+            time: 28,
+            text: "Marker 4"
+         },
+         {
+            time: 36,
+            text: "Marker 5"
+         }
+      ];
+      */
+
+   //load the marker plugin
+   player.markers({
+      markerTip:{
+         display: true,
+         text: function(marker){
+            return marker.text;
+         }
+      },
+      breakOverlay:{
+         display: true,
+         displayTime: 3,
+         text: function(marker) {
+            return "This is an break overlay: " + marker.text;
+         }
+      },
+      onMarkerReached: function(marker) {
+        console.log(marker); 
+      },
+      markers: markers
+   });
+   
+   $(document).ready(function(){
+      // insert marker list
+       var counter = 0;
+       $("#mark-button").click(function() {
+            var currenttime = player.currentTime();
+            player.markers.add([{
+                time: currenttime,
+                text: "Marker " + counter
+            }]);
+            markers.push({time: currenttime, text: "Marker " + counter});
+            if (counter==0)
+              $("#marker-list").append("<tr><td class='col-md-2'>Markers</td><td>Notes</td></tr>");
+            var item = $("<tr><td class='col-md-2' data-index='"+counter+"'><a href='#'>"+markers[counter].text+"</a></td> <td><textarea class='form-control' rows='1' ></textarea></td></tr>");
+            $("#marker-list").append(item);
+            counter = counter + 1;
+       });
+
+      // set up click event
+      $(document).on("click", "#marker-list td", function() {
+         var index = $(this).data("index");
+
+         player.currentTime(markers[index].time);
+      });
+
+      $(document).on("click", "#play-button", function() {
+        if(player.paused())
+          player.play();
+      });
+
+      $(document).on("click", "#pause-button", function() {
+        if(!player.paused())
+          player.pause();
+      });
+   });
+
+</script>
+
+
+</html>
