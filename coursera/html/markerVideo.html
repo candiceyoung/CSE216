@@ -66,23 +66,23 @@
    // var markers = [];
    var markers = [
          {
-            time: 2.39,
+            time: 159,
             text: "America became more and more important since 1940s"
          },
          {
-            time: 4.24,
+            time: 274,
             text: "Dimensions of America as a world power"
          },
          {
-            time: 4.58,
+            time: 298,
             text: "National security changes"
          },
          {
-            time: 8.35,
+            time: 515,
             text: "Economical changes"
          },
          {
-            time: 9.57,
+            time: 597,
             text: "Domestic transformation of the US"
          }
       ];
@@ -114,7 +114,7 @@
           console.log(markers[i]);
           player.markers.add([markers[i]]);
           console.log(markers[i].time);
-          var item = $("<tr><td class='col-md-2' data-index='" + i + "'><a href='#'>"+markers[i].text+"</a></td> <td><textarea class='form-control' rows='1' ></textarea></td></tr>");
+          var item = $("<tr><td class='col-md-2' data-index='" + i + "'><a href='#'>"+markers[i].text+"</a></td></tr>");
           $("#marker-list").append(item);
       }
 
