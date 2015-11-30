@@ -43,8 +43,6 @@
             </div>
               <div class="col-md-5">
                 <p>
-                <button type="button" id="mark-button" class="btn btn-primary">Mark</button>
-                  &nbsp &nbsp
                 <button type="button" id="play-button" class="btn btn-success">Play</button>
                 <button type="button" id="pause-button" class="btn btn-danger">Pause</button>
               </p>
@@ -67,23 +65,35 @@
    var markers = [
          {
             time: 159,
-            text: "America became more and more important since 1940s"
+            text: "1. America became more and more important since 1940s"
          },
          {
             time: 274,
-            text: "Dimensions of America as a world power"
+            text: "2. Dimensions of America as a world power"
          },
          {
             time: 298,
-            text: "National security changes"
+            text: "> 2.1 National security changes"
+         },
+         {
+            time: 298,
+            text: "> 2.2 Setting frontiers in Europe and Asia"
          },
          {
             time: 515,
-            text: "Economical changes"
+            text: "3. Economical changes"
          },
          {
             time: 597,
-            text: "Domestic transformation of the US"
+            text: "4. Domestic transformation of the US"
+         },
+         {
+            time: 600,
+            text: "> 4.1 South -> National Economy"
+         },
+         {
+            time: 772,
+            text: "> 4.2 Rise of the Golden West"
          }
       ];
 
@@ -99,7 +109,7 @@
          display: true,
          displayTime: 3,
          text: function(marker) {
-            return "This is an break overlay: " + marker.text;
+            return marker.text;
          }
       },
       onMarkerReached: function(marker) {
